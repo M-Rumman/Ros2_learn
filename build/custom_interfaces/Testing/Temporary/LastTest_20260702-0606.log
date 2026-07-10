@@ -1,0 +1,55 @@
+Start testing: Jul 02 11:06 PKT
+----------------------------------------------------------
+1/2 Testing: lint_cmake
+1/2 Test: lint_cmake
+Command: "/usr/bin/python3" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/lint_cmake.xunit.xml" "--package-name" "custom_interfaces" "--output-file" "/home/rumman/ros2_ws/build/custom_interfaces/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/lint_cmake.xunit.xml"
+Directory: /home/rumman/ros2_ws/src/custom_interfaces
+"lint_cmake" start time: Jul 02 11:06 PKT
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/rumman/ros2_ws/src/custom_interfaces':
+ - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/lint_cmake.xunit.xml
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/lint_cmake.xunit.xml'
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"lint_cmake" end time: Jul 02 11:06 PKT
+"lint_cmake" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: xmllint
+2/2 Test: xmllint
+Command: "/usr/bin/python3" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/xmllint.xunit.xml" "--package-name" "custom_interfaces" "--output-file" "/home/rumman/ros2_ws/build/custom_interfaces/ament_xmllint/xmllint.txt" "--command" "/opt/ros/humble/bin/ament_xmllint" "--xunit-file" "/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/xmllint.xunit.xml"
+Directory: /home/rumman/ros2_ws/src/custom_interfaces
+"xmllint" start time: Jul 02 11:06 PKT
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/rumman/ros2_ws/src/custom_interfaces':
+ - /opt/ros/humble/bin/ament_xmllint --xunit-file /home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/xmllint.xunit.xml
+File 'package.xml' is invalid:
+/home/rumman/ros2_ws/src/custom_interfaces/package.xml:15: element test_depend: Schemas validity error : Element 'test_depend': This element is not expected. Expected is one of ( member_of_group, export ).
+/home/rumman/ros2_ws/src/custom_interfaces/package.xml fails to validate
+
+1 files are invalid
+-- run_test.py: return code 1
+-- run_test.py: verify result file '/home/rumman/ros2_ws/build/custom_interfaces/test_results/custom_interfaces/xmllint.xunit.xml'
+<end of output>
+Test time =   1.64 sec
+----------------------------------------------------------
+Test Failed.
+"xmllint" end time: Jul 02 11:06 PKT
+"xmllint" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Jul 02 11:06 PKT
+
+lint_cmake =   0.16 sec*proc
+
+linter =   1.81 sec*proc
+
+xmllint =   1.64 sec*proc
+

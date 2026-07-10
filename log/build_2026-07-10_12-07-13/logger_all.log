@@ -1,0 +1,185 @@
+[0.213s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'first_urdf']
+[0.213s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['first_urdf'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7fbf8ff5e980>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fbf8ff5e410>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fbf8ff5e410>>, mixin_verb=('build',))
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.386s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/rumman/ros2_ws'
+[0.386s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.386s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.386s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.397s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.397s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.397s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.397s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.397s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.398s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.399s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extensions ['ignore', 'ignore_ament_install']
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extension 'ignore'
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extension 'ignore_ament_install'
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extensions ['colcon_pkg']
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extension 'colcon_pkg'
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extensions ['colcon_meta']
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extension 'colcon_meta'
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extensions ['ros']
+[0.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/add_integers) by extension 'ros'
+[0.403s] DEBUG:colcon.colcon_core.package_identification:Package 'src/add_integers' with type 'ros.ament_python' and name 'add_integers'
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extension 'ignore'
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extension 'ignore_ament_install'
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extensions ['colcon_pkg']
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extension 'colcon_pkg'
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extensions ['colcon_meta']
+[0.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extension 'colcon_meta'
+[0.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extensions ['ros']
+[0.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_interfaces) by extension 'ros'
+[0.404s] DEBUG:colcon.colcon_core.package_identification:Package 'src/custom_interfaces' with type 'ros.ament_cmake' and name 'custom_interfaces'
+[0.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extensions ['ignore', 'ignore_ament_install']
+[0.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extension 'ignore'
+[0.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extension 'ignore_ament_install'
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extensions ['colcon_pkg']
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extension 'colcon_pkg'
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extensions ['colcon_meta']
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extension 'colcon_meta'
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extensions ['ros']
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/first_urdf) by extension 'ros'
+[0.405s] DEBUG:colcon.colcon_core.package_identification:Package 'src/first_urdf' with type 'ros.ament_cmake' and name 'first_urdf'
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extensions ['ignore', 'ignore_ament_install']
+[0.405s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extension 'ignore'
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extension 'ignore_ament_install'
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extensions ['colcon_pkg']
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extension 'colcon_pkg'
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extensions ['colcon_meta']
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extension 'colcon_meta'
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extensions ['ros']
+[0.406s] Level 1:colcon.colcon_core.package_identification:_identify(src/lifecycle_demo) by extension 'ros'
+[0.407s] DEBUG:colcon.colcon_core.package_identification:Package 'src/lifecycle_demo' with type 'ros.ament_cmake' and name 'lifecycle_demo'
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extensions ['ignore', 'ignore_ament_install']
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extension 'ignore'
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extension 'ignore_ament_install'
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extensions ['colcon_pkg']
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extension 'colcon_pkg'
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extensions ['colcon_meta']
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extension 'colcon_meta'
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extensions ['ros']
+[0.407s] Level 1:colcon.colcon_core.package_identification:_identify(src/talker_listener) by extension 'ros'
+[0.408s] DEBUG:colcon.colcon_core.package_identification:Package 'src/talker_listener' with type 'ros.ament_python' and name 'talker_listener'
+[0.408s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.408s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.408s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.408s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.408s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.437s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'custom_interfaces' in 'src/custom_interfaces'
+[0.437s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'lifecycle_demo' in 'src/lifecycle_demo'
+[0.438s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'talker_listener' in 'src/talker_listener'
+[0.438s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'add_integers' in 'src/add_integers'
+[0.438s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.438s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.440s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 4 installed packages in /home/rumman/ros2_ws/install
+[0.442s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 366 installed packages in /opt/ros/humble
+[0.443s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_args' from command line to 'None'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_target' from command line to 'None'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_clean_cache' from command line to 'False'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_clean_first' from command line to 'False'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'cmake_force_configure' from command line to 'False'
+[0.493s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'ament_cmake_args' from command line to 'None'
+[0.494s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'catkin_cmake_args' from command line to 'None'
+[0.494s] Level 5:colcon.colcon_core.verb:set package 'first_urdf' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.494s] DEBUG:colcon.colcon_core.verb:Building package 'first_urdf' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rumman/ros2_ws/build/first_urdf', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rumman/ros2_ws/install/first_urdf', 'merge_install': False, 'path': '/home/rumman/ros2_ws/src/first_urdf', 'symlink_install': False, 'test_result_base': None}
+[0.494s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.495s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.495s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rumman/ros2_ws/src/first_urdf' with build type 'ament_cmake'
+[0.495s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rumman/ros2_ws/src/first_urdf'
+[0.499s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.499s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.499s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.513s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rumman/ros2_ws/build/first_urdf': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --build /home/rumman/ros2_ws/build/first_urdf -- -j8 -l8
+[3.139s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rumman/ros2_ws/build/first_urdf' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --build /home/rumman/ros2_ws/build/first_urdf -- -j8 -l8
+[3.150s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rumman/ros2_ws/build/first_urdf': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --install /home/rumman/ros2_ws/build/first_urdf
+[3.162s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(first_urdf)
+[3.163s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rumman/ros2_ws/build/first_urdf' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --install /home/rumman/ros2_ws/build/first_urdf
+[3.165s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf' for CMake module files
+[3.166s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf' for CMake config files
+[3.166s] Level 1:colcon.colcon_core.shell:create_environment_hook('first_urdf', 'cmake_prefix_path')
+[3.166s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.ps1'
+[3.167s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.dsv'
+[3.168s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.sh'
+[3.169s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/bin'
+[3.169s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/lib/pkgconfig/first_urdf.pc'
+[3.169s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/lib/python3.10/site-packages'
+[3.169s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/bin'
+[3.170s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.ps1'
+[3.171s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.dsv'
+[3.171s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.sh'
+[3.172s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.bash'
+[3.173s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.zsh'
+[3.173s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rumman/ros2_ws/install/first_urdf/share/colcon-core/packages/first_urdf)
+[3.174s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(first_urdf)
+[3.174s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf' for CMake module files
+[3.175s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf' for CMake config files
+[3.175s] Level 1:colcon.colcon_core.shell:create_environment_hook('first_urdf', 'cmake_prefix_path')
+[3.175s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.ps1'
+[3.175s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.dsv'
+[3.176s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/hook/cmake_prefix_path.sh'
+[3.176s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/bin'
+[3.177s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/lib/pkgconfig/first_urdf.pc'
+[3.177s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/lib/python3.10/site-packages'
+[3.177s] Level 1:colcon.colcon_core.environment:checking '/home/rumman/ros2_ws/install/first_urdf/bin'
+[3.178s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.ps1'
+[3.178s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.dsv'
+[3.179s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.sh'
+[3.179s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.bash'
+[3.180s] INFO:colcon.colcon_core.shell:Creating package script '/home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.zsh'
+[3.180s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rumman/ros2_ws/install/first_urdf/share/colcon-core/packages/first_urdf)
+[3.181s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[3.181s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[3.181s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[3.181s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[3.239s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[3.239s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[3.239s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[3.240s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[3.240s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.FileNotFound: Failed to connect to socket /run/user/1000/bus: No such file or directory
+[3.240s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[3.240s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rumman/ros2_ws/install/local_setup.ps1'
+[3.241s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rumman/ros2_ws/install/_local_setup_util_ps1.py'
+[3.243s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rumman/ros2_ws/install/setup.ps1'
+[3.244s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rumman/ros2_ws/install/local_setup.sh'
+[3.245s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rumman/ros2_ws/install/_local_setup_util_sh.py'
+[3.245s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rumman/ros2_ws/install/setup.sh'
+[3.247s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rumman/ros2_ws/install/local_setup.bash'
+[3.247s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rumman/ros2_ws/install/setup.bash'
+[3.248s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rumman/ros2_ws/install/local_setup.zsh'
+[3.249s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rumman/ros2_ws/install/setup.zsh'

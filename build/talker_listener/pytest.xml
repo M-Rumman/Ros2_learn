@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="14.785" timestamp="2026-07-02T17:11:55.440394" hostname="Shadow"><testcase classname="talker_listener.test.test_talker_listener" name="test_talker_listener" time="14.472"><failure message="test_talker_listener.TestTalkerListener.test_talker_transmits failed">
+=================================================================================================================
+FAIL: test_talker_listener.TestTalkerListener.test_talker_transmits
+-----------------------------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/rumman/ros2_ws/src/talker_listener/test/test_talker_listener.py", line 88, in test_talker_transmits
+    self.assertGreater(len(msgs_rx), 2)
+AssertionError: 0 not greater than 2
+</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,24 @@
+[0.028s] Invoking command in '/home/rumman/ros2_ws/build/first_urdf': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --build /home/rumman/ros2_ws/build/first_urdf -- -j8 -l8
+[0.130s] Invoked command in '/home/rumman/ros2_ws/build/first_urdf' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --build /home/rumman/ros2_ws/build/first_urdf -- -j8 -l8
+[0.143s] Invoking command in '/home/rumman/ros2_ws/build/first_urdf': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --install /home/rumman/ros2_ws/build/first_urdf
+[0.150s] -- Install configuration: ""
+[0.151s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/urdf
+[0.151s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/urdf/block.urdf
+[0.151s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/launch
+[0.152s] -- Installing: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/launch/display.launch.py
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/ament_index/resource_index/package_run_dependencies/first_urdf
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/ament_index/resource_index/parent_prefix_path/first_urdf
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/environment/ament_prefix_path.sh
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/environment/ament_prefix_path.dsv
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/environment/path.sh
+[0.152s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/environment/path.dsv
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/local_setup.bash
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/local_setup.sh
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/local_setup.zsh
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/local_setup.dsv
+[0.153s] -- Installing: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.dsv
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/ament_index/resource_index/packages/first_urdf
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/cmake/first_urdfConfig.cmake
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/cmake/first_urdfConfig-version.cmake
+[0.153s] -- Up-to-date: /home/rumman/ros2_ws/install/first_urdf/share/first_urdf/package.xml
+[0.155s] Invoked command in '/home/rumman/ros2_ws/build/first_urdf' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rumman/ros2_ws/install/talker_listener:/home/rumman/ros2_ws/install/add_integers:/opt/ros/humble /usr/bin/cmake --install /home/rumman/ros2_ws/build/first_urdf

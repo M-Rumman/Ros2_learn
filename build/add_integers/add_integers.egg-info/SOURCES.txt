@@ -1,0 +1,15 @@
+LICENSE
+package.xml
+setup.cfg
+setup.py
+../../build/add_integers/add_integers.egg-info/PKG-INFO
+../../build/add_integers/add_integers.egg-info/SOURCES.txt
+../../build/add_integers/add_integers.egg-info/dependency_links.txt
+../../build/add_integers/add_integers.egg-info/entry_points.txt
+../../build/add_integers/add_integers.egg-info/requires.txt
+../../build/add_integers/add_integers.egg-info/top_level.txt
+../../build/add_integers/add_integers.egg-info/zip-safe
+add_integers/__init__.py
+add_integers/client_node.py
+add_integers/service_node.py
+resource/add_integers
