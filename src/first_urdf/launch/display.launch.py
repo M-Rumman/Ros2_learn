@@ -24,11 +24,12 @@ def generate_launch_description():
         }]
     )
 
-    # Added to handle joint states, though your joint is fixed, it keeps TF tree healthy
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
+    # To actually rotate the joints
+    joint_state_publisher_gui_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        output='screen',
     )
 
     rviz_node = Node(
@@ -41,6 +42,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_state_publisher_node,
-        joint_state_publisher_node,
+        joint_state_publisher_gui_node,
         rviz_node
     ])
