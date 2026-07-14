@@ -1,3 +1,4 @@
+import xacro
 import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -5,10 +6,9 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('first_urdf')
-    urdf_path = os.path.join(pkg_share, 'urdf', 'block.urdf')
+    urdf_path = os.path.join(pkg_share, 'urdf', 'block.xacro')
 
-    with open(urdf_path, 'r') as infp:
-        robot_description_content = infp.read()
+    robot_description_content = xacro.process_file(urdf_path).toxml()
 
     # Optional: Point to a saved rviz config if you create one later
     rviz_config_path = os.path.join(pkg_share, 'rviz', 'block_display.rviz')
