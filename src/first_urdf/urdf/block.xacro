@@ -181,19 +181,23 @@
     </gazebo>
 
     <gazebo reference="wheel1">
-            <mu1>0.8</mu1>
-    </gazebo>
-
-    <gazebo reference="wheel2">
-            <mu1>0.8</mu1>
-    </gazebo>
-
-    <gazebo reference="wheel3">
-            <mu1>0.8</mu1>
+        <mu1>0.8</mu1>
+        <mu2>0.5</mu2>
     </gazebo>
 
     <gazebo reference="wheel4">
-            <mu1>0.8</mu1>
+        <mu1>0.8</mu1>
+        <mu2>0.5</mu2>
+    </gazebo>
+
+   <gazebo reference="wheel3">
+        <mu1>0.8</mu1>
+        <mu2>0.5</mu2>
+    </gazebo>
+
+    <gazebo reference="wheel2">
+        <mu1>0.8</mu1>
+        <mu2>0.5</mu2>
     </gazebo>
 
     <gazebo reference="base_link">

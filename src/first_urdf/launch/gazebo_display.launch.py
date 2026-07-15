@@ -48,10 +48,10 @@ def generate_launch_description():
         output='screen'
     )
     
-    diff_drive_controller_spawner=Node(
+    mecanum_drive_controller_spawner=Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['diff_drive_controller'],
+        arguments=['mecanum_drive_controller'],
         output='screen'
     )
     
@@ -62,10 +62,10 @@ def generate_launch_description():
         )
     )
     
-    load_diff_drive_controller=RegisterEventHandler(
+    load_mecanum_drive_controller=RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
-            on_exit=[diff_drive_controller_spawner]
+            on_exit=[mecanum_drive_controller_spawner]
         )
     )
 
@@ -74,5 +74,5 @@ def generate_launch_description():
         robot_state_publisher_node,
         spawn_entity,
         load_joint_state_broadcaster,
-        load_diff_drive_controller
+        load_mecanum_drive_controller
     ])

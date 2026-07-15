@@ -6,22 +6,27 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    diff_drive_controller:
-      type: diff_drive_controller/DiffDriveController
+    mecanum_drive_controller:
+      type: mecanum_drive_controller/MecanumDriveController
   
-diff_drive_controller:
+mecanum_drive_controller:
   ros__parameters:
-    use_stamped_vel: false
-    left_wheel_names: ['wheel1_to_base', 'wheel3_to_base']
-    right_wheel_names: ['wheel2_to_base', 'wheel4_to_base']
+    use_stamped_vel: true
+    #use_cmd_vel: no need of this as twist keyboard publishes a twist message by default and mecanum drive accepts the same by default
+    front_left_wheel_command_joint_name: 'wheel4_to_base'
+    front_right_wheel_command_joint_name: 'wheel3_to_base'
+    rear_left_wheel_command_joint_name: 'wheel2_to_base'
+    rear_right_wheel_command_joint_name: 'wheel1_to_base'
 
-    wheel_radius: 0.2
-    wheel_separation: 1.15
-    wheels_per_side: 1
+    kinematics:
+      base_frame_offset : {x: 0.0, y: 0.0, theta: 0.0} #these are all offsets of the actual physical base_link center to the geometric center of wheels.
+      wheels_radius: 0.2
+      sum_of_robot_center_projection_on_X_Y_axis: 0.875 #controller uses it to calculate how fast each wheel must spin to move the robot in a particular direction
 
-    base_frame_id: base_link
-    odom_frame_id: odom
+    base_frame_id: base_link #coordinate frame linked to the robot base
+    odom_frame_id: odom #coordinate frame used for odometry
     publish_rate: 50.0
-    cmd_vel_timeout: 1.0
-    enable_odom_tf: true
-    open_loop: false
+    reference_timeout: 1.0 #equivalent to cmd_vel_timeout
+    enable_odom_tf: true #enabling the transform between odom and base_link
+    open_loop: false #if true, it relies on sent velocity commands rather than wheel states for odometry
+    publish_limited_velocity: true #publishes velocity if limits are applied
