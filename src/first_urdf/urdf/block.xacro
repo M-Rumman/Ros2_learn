@@ -5,28 +5,28 @@
         <parent link="base_link"/>
         <child link="wheel1"/>
         <axis xyz="0 0 1"/>
-        <origin xyz="-0.575 0.3 -0.4" rpy="1.5708 0 1.5708"/>
+        <origin xyz="-0.5 0.5 -0.4" rpy="1.5708 0 0"/>
     </joint>
 
     <joint name="wheel2_to_base" type="continuous">
         <parent link="base_link"/>
         <child link="wheel2"/>
         <axis xyz="0 0 1"/>
-        <origin xyz="0.575 0.3 -0.4" rpy="1.5708 0 1.5708"/>
+        <origin xyz="0.5 0.5 -0.4" rpy="1.5708 0 0"/>
     </joint>
 
     <joint name="wheel3_to_base" type="continuous">
         <parent link="base_link"/>
         <child link="wheel3"/>
         <axis xyz="0 0 1"/>
-        <origin xyz="-0.575 -0.3 -0.4" rpy="1.5708 0 1.5708"/>
+        <origin xyz="-0.5 -0.5 -0.4" rpy="1.5708 0 0"/>
     </joint>
 
     <joint name="wheel4_to_base" type="continuous">
         <parent link="base_link"/>
         <child link="wheel4"/>
         <axis xyz="0 0 1"/>
-        <origin xyz="0.575 -0.3 -0.4" rpy="1.5708 0 1.5708"/>
+        <origin xyz="0.5 -0.5 -0.4" rpy="1.5708 0 0"/>
     </joint>
 
     <link name="base_link">
@@ -136,68 +136,27 @@
         </inertial>
     </link>
 
-    <ros2_control name="first_urdf_control" type="system">
-        <hardware>
-            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-        </hardware>
-        <joint name="wheel1_to_base">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="velocity"/>
-            <state_interface name="position"/>
-        </joint>
-        <joint name="wheel2_to_base">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="velocity"/>
-            <state_interface name="position"/>
-        </joint>
-        <joint name="wheel3_to_base">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="velocity"/>
-            <state_interface name="position"/>
-        </joint>
-        <joint name="wheel4_to_base">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="velocity"/>
-            <state_interface name="position"/>
-        </joint>
-    </ros2_control>
-
     <gazebo>
-        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so"> 
-            <parameters>$(find first_urdf)/config/controller.yaml</parameters> 
+        <plugin name="gazebo_ros_planar_move" filename="libgazebo_ros_planar_move.so">
+            <ros>
+                <!-- Overrides the default topic if you want, defaults to /cmd_vel -->
+                <argument>~/cmd_vel:=cmd_vel</argument>
+                <argument>~/odom:=odom</argument>
+             </ros>
+            <update_rate>50</update_rate>
+            <publish_rate>50</publish_rate>
+
+            <!-- Must match your robot's root link -->
+            <robot_base_frame>base_link</robot_base_frame>
+
+            <!-- Set to true if you want the plugin to handle odometry publishing -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            
+            <covariance_x>0.0001</covariance_x>
+            <covariance_y>0.0001</covariance_y>
+            <covariance_yaw>0.01</covariance_yaw>
         </plugin>
-    </gazebo>
-
-    <gazebo reference="wheel1">
-        <mu1>0.8</mu1>
-        <mu2>0.5</mu2>
-    </gazebo>
-
-    <gazebo reference="wheel4">
-        <mu1>0.8</mu1>
-        <mu2>0.5</mu2>
-    </gazebo>
-
-   <gazebo reference="wheel3">
-        <mu1>0.8</mu1>
-        <mu2>0.5</mu2>
-    </gazebo>
-
-    <gazebo reference="wheel2">
-        <mu1>0.8</mu1>
-        <mu2>0.5</mu2>
     </gazebo>
 
     <gazebo reference="base_link">

@@ -40,39 +40,9 @@ def generate_launch_description():
         arguments=['-topic', 'robot_description', '-entity', 'my_block_robot'],
         output='screen'
     )
-    
-    joint_state_broadcaster_spawner=Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['joint_state_broadcaster'],
-        output='screen'
-    )
-    
-    mecanum_drive_controller_spawner=Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['mecanum_drive_controller'],
-        output='screen'
-    )
-    
-    load_joint_state_broadcaster=RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=spawn_entity,
-            on_exit=[joint_state_broadcaster_spawner]
-        )
-    )
-    
-    load_mecanum_drive_controller=RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[mecanum_drive_controller_spawner]
-        )
-    )
 
     return LaunchDescription([
         gazebo_launch,
         robot_state_publisher_node,
         spawn_entity,
-        load_joint_state_broadcaster,
-        load_mecanum_drive_controller
     ])
