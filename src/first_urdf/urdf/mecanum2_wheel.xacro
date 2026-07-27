@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Helper macro to generate individual rollers with stable physical traits -->
+  <xacro:macro name="mecanum_roller" params="parent theta radius width offset roller_idx roll_sign">
+    <link name="${parent}_roller_${roller_idx}">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="${radius}" length="${width}" />
+        </geometry>
+        <material name="dark_grey">
+          <color rgba="0.2 0.2 0.2 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="${radius}" length="${width}" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1" /> 
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0002" />
+      </inertial>
+    </link>
+
+    <!-- Continuous joint to let the passive roller spin freely -->
+    <joint name="${parent}_roller_${roller_idx}_joint" type="continuous">
+      <parent link="${parent}" />
+      <child link="${parent}_roller_${roller_idx}" />
+      <!-- Swapped -theta from Pitch to Yaw to keep rollers perfectly tangential -->
+      <origin xyz="${offset * cos(theta)} ${offset * sin(theta)} 0" 
+              rpy="${roll_sign * 0.785398} 0 ${theta}" />
+      <axis xyz="0 0 1" />
+      <dynamics damping="0.005" friction="0.01"/>
+    </joint>
+
+    <gazebo reference="${parent}_roller_${roller_idx}">
+      <material>Gazebo/DarkGrey</material>
+      <mu1 value="1.2" /> <!-- 1. Slightly lower from 1.5 to allow smooth transitions -->
+      <mu2 value="1.2" />
+  
+      <kp value="50000.0" />  <!-- Halved from 100000.0 to let rollers squash by a fraction of a millimeter -->
+      <kd value="50.0" />     <!-- Increased from 10.0 to act as a shock absorber during handoffs -->
+  
+      <minDepth value="0.008" /> <!-- Raised slightly from 0.005 -->
+      <maxVel value="0.01" />    <!-- Lowered from 0.05 to cap the maximum velocity correction speed -->
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Main Mecanum Wheel Assembly Macro -->
+  <xacro:macro name="mecanum_wheel" params="prefix parent xyz rpy roll_sign">
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.15" length="0.08" />
+        </geometry>
+        <material name="blue">
+          <color rgba="0.1 0.4 0.8 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.12" length="0.07" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.8" />
+        <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="0.005" iyz="0.0" izz="0.009" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="${parent}" />
+      <child link="${prefix}_wheel_link" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+      <axis xyz="0 0 1" />
+      <dynamics damping="0.5" friction="1.5"/>
+    </joint>
+
+    <!-- Mount 12 passive rollers around the wheel perimeter -->
+    <!-- Mount 12 passive rollers around the wheel perimeter using exact math expressions -->
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="0.0"               radius="0.035" width="0.07" offset="0.15" roller_idx="1"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${1*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="2"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${2*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="3"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${3*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="4"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${4*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="5"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${5*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="6"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${pi}"             radius="0.035" width="0.07" offset="0.15" roller_idx="7"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${7*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="8"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${8*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="9"  roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${9*pi/6}"         radius="0.035" width="0.07" offset="0.15" roller_idx="10" roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${10*pi/6}"        radius="0.035" width="0.07" offset="0.15" roller_idx="11" roll_sign="${roll_sign}"/>
+    <xacro:mecanum_roller parent="${prefix}_wheel_link" theta="${11*pi/6}"        radius="0.035" width="0.07" offset="0.15" roller_idx="12" roll_sign="${roll_sign}"/>
+
+    <gazebo reference="${prefix}_wheel_link">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

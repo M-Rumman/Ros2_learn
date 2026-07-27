@@ -1,0 +1,42 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000 # Hz
+
+    mecanum_drive_controller:
+      type: mecanum_drive_controller/MecanumDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+      joints:
+        - front_left_wheel_joint
+        - front_right_wheel_joint
+        - rear_left_wheel_joint
+        - rear_right_wheel_joint
+
+mecanum_drive_controller:
+  ros__parameters:
+    # Maps exactly to the driven joint tags defined in your macro
+    front_left_wheel_command_joint_name: front_left_wheel_joint
+    front_right_wheel_command_joint_name: front_right_wheel_joint
+    rear_left_wheel_command_joint_name: rear_left_wheel_joint
+    rear_right_wheel_command_joint_name: rear_right_wheel_joint
+
+    kinematics:
+      wheels_radius: 0.04 # Updated to match your small wheel CAD dimensions
+      # Calculated explicitly from your wheel offsets (x: 0.08 + y: 0.09)
+      sum_of_robot_center_projection_on_X_Y_axis: 0.17
+      base_frame_offset:
+        x: 0.0
+        y: 0.0
+        theta: 0.0
+
+    reference_timeout: 1.0
+
+    # Crucial Fix for ROS 2 Humble teleop_twist_keyboard compatibility:
+    # Most standard teleop tools publish un-stamped Twist messages.
+    # Setting this to false allows direct /cmd_vel mapping.
+    use_stamped_vel: false
+
+    base_frame_id: base_link
+    odom_frame_id: odom
+    enable_odom_tf: true
