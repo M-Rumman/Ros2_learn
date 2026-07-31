@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mecanum_bot">
+
+  <xacro:property name="mesh_pkg" value="mecanum_bot" />
+
+  <!-- ===================== chassis geometry ===================== -->
+  <!-- Box base_link, 20cm x 15cm x 8cm, matching your original scale. -->
+  <xacro:property name="base_x"     value="0.20" />
+  <xacro:property name="base_y"     value="0.15" />
+  <xacro:property name="base_z"     value="0.08" />
+  <xacro:property name="base_mass"  value="0.4"  />
+
+  <!-- Wheel geometry from the SolidWorks export -->
+  <xacro:property name="wheel_radius" value="0.0267" />
+  <xacro:property name="wheel_z_gap"  value="0.005" />  <!-- ground clearance under the box -->
+
+  <!-- Square wheel layout: ONE shared stance value used for both the X
+       (front/back) and Y (left/right) offsets, so all four wheels sit at
+       the exact same distance from base_link's center -> a true square,
+       regardless of the box's own (non-square) footprint.
+       0.08 m is chosen so the wheel hub clears the box's side edge
+       (half of base_y = 0.075 m) by 5 mm, while still sitting well
+       within the box's front/back overhang (half of base_x = 0.10 m).
+       If you resize the box, re-check this value: it must stay
+       >= base_y/2 so wheels don't clip into the chassis sides, and
+       < base_x/2 so wheels remain roughly under the chassis. -->
+  <xacro:property name="wheel_stance" value="0.08" />
+
+  <!-- base_link sits with its bottom at z=0 (ground), so wheels mounted at
+       z = -half_box_height sit at the bottom edge of the box, and the
+       wheel centers land at wheel_radius above ground once base_link's
+       origin is elevated by (wheel_radius + wheel_z_gap) at spawn time. -->
+  <xacro:property name="wheel_z" value="${-base_z/2}" />
+
+  <xacro:include filename="$(find mecanum_bot)/urdf/mecanum_wheel.xacro" />
+
+  <!-- ===================== base_link ===================== -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_x} ${base_y} ${base_z}" />
+      </geometry>
+      <material name="blue">
+        <color rgba="0.0 0.0 0.5 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_x} ${base_y} ${base_z}" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${base_mass}" />
+      <inertia ixx="0.000963" ixy="0.0" ixz="0.0" iyy="0.001547" iyz="0.0" izz="0.002083" />
+    </inertial>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- ===================== four wheels, square layout ===================== -->
+  <!-- roll_sign handedness: for a mecanum drive, front-left and rear-right
+       share one roller hand, front-right and rear-left share the other,
+       so the four contact-patch friction components combine into pure
+       forward/strafe/rotate motion instead of fighting each other. -->
+  <xacro:mecanum_wheel prefix="front_left"  parent="base_link"
+    xyz="${wheel_stance} ${wheel_stance} ${wheel_z}"   roll_sign="1"  mesh_pkg="${mesh_pkg}" />
+  <xacro:mecanum_wheel prefix="front_right" parent="base_link"
+    xyz="${wheel_stance} ${-wheel_stance} ${wheel_z}"  roll_sign="-1" mesh_pkg="${mesh_pkg}" />
+  <xacro:mecanum_wheel prefix="rear_left"   parent="base_link"
+    xyz="${-wheel_stance} ${wheel_stance} ${wheel_z}"  roll_sign="-1" mesh_pkg="${mesh_pkg}" />
+  <xacro:mecanum_wheel prefix="rear_right"  parent="base_link"
+    xyz="${-wheel_stance} ${-wheel_stance} ${wheel_z}" roll_sign="1"  mesh_pkg="${mesh_pkg}" />
+
+  <!-- ===================== ros2_control ===================== -->
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="front_left_wheel_joint">
+      <command_interface name="velocity"><param name="min">-10</param><param name="max">10</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="front_right_wheel_joint">
+      <command_interface name="velocity"><param name="min">-10</param><param name="max">10</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_left_wheel_joint">
+      <command_interface name="velocity"><param name="min">-10</param><param name="max">10</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_right_wheel_joint">
+      <command_interface name="velocity"><param name="min">-10</param><param name="max">10</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find mecanum_bot)/config/mecanum_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>

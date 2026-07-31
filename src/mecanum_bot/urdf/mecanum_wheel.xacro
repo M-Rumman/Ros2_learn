@@ -1,21 +1,46 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="mecanum_wheel" params="prefix parent xyz roll_sign mesh_pkg hub_sign:=1">
+  <!--
+    Mecanum wheel macro.
 
+    Geometry (hub + 8 rollers) comes directly from the SolidWorks sw2urdf
+    export (mecanum_wheel_final_assembly.urdf). Each roller's xyz/rpy below
+    is copied verbatim from that export, so the roller ring matches your
+    CAD assembly exactly instead of being re-derived analytically.
+
+    IMPORTANT axis note:
+    In the SolidWorks assembly, the hub's own spin axis is its LOCAL Z
+    (all 8 rollers sit in the hub's local XY plane, confirmed from the
+    joint origins). To mount this wheel on a chassis so it actually rolls
+    forward, the parent-to-hub joint must rotate the hub so that local Z
+    becomes the sideways axis, and the wheel_joint's rotation axis must
+    match that same local Z, NOT world Z. This macro applies that
+    correction internally so callers only need to give a mount position
+    and a left/right flag.
+  -->
+
+  <xacro:macro name="mecanum_wheel" params="prefix parent xyz roll_sign mesh_pkg">
+
+    <!-- ============ HUB ============ -->
+    <!-- rpy = 1.5708 0 0 rotates the hub's local Z (spin axis in CAD) to
+         align with the Y axis once attached to base_link, so the wheel
+         rolls along X (forward) when it spins about its own axis. -->
     <link name="${prefix}_wheel_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 ${(1 - hub_sign) * pi / 2} 0" />
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
         <geometry>
-          <mesh filename="package://${mesh_pkg}/meshes/wheel_hub.STL" scale="${hub_sign} 1 1"/>
+          <mesh filename="package://${mesh_pkg}/meshes/wheel_hub.STL" scale="1 1 1"/>
         </geometry>
         <material name="yellow">
           <color rgba="1.0 0.85 0.0 1.0" />
         </material>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 ${(1 - hub_sign) * pi / 2} 0" />
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
         <geometry>
+          <!-- Simple cylinder collision instead of the roller-covered mesh:
+               much cheaper and far more stable for ODE contact solving. -->
           <cylinder radius="0.0267" length="0.024" />
         </geometry>
       </collision>
@@ -31,7 +56,10 @@
       <parent link="${parent}" />
       <child link="${prefix}_wheel_link" />
       <origin xyz="${xyz}" rpy="1.5708 0 0" />
-      <axis xyz="0 0 1" />
+      <!-- Rotation axis is the hub's local Z, which after the rpy above
+           now points along the parent's Y (sideways), which is the
+           actual wheel rolling axis. -->
+      <axis xyz="0 1 0" />
       <dynamics damping="0.05" friction="0.05"/>
     </joint>
 
@@ -39,6 +67,12 @@
       <material>Gazebo/Yellow</material>
     </gazebo>
 
+    <!-- ============ ROLLERS (verbatim from sw2urdf export) ============ -->
+    <!-- roll_sign flips the whole roller ring left<->right so opposite-hand
+         wheels (needed for mecanum: FL/RR one hand, FR/RL the other) can
+         share this same macro. It mirrors about the hub's local X axis by
+         negating the Y component of each roller's mount position and its
+         yaw, which is equivalent to mirroring the roller pattern. -->
     <xacro:roller prefix="${prefix}" num="1" mesh_pkg="${mesh_pkg}"
       x="0.0225"    y="0.0"        rr="-0.7854" rp="0" ry="0"       roll_sign="${roll_sign}"/>
     <xacro:roller prefix="${prefix}" num="2" mesh_pkg="${mesh_pkg}"
@@ -58,6 +92,9 @@
 
   </xacro:macro>
 
+  <!-- Single roller instance, mounted relative to the wheel hub link.
+       x,y and rr(oll)/rp(itch)/ry(aw) come straight from the SolidWorks
+       export for roller_1..8 (see mecanum_wheel_final_assembly.urdf). -->
   <xacro:macro name="roller" params="prefix num mesh_pkg x y rr rp ry roll_sign">
     <link name="${prefix}_roller_${num}">
       <visual>
@@ -85,6 +122,8 @@
     <joint name="${prefix}_roller_${num}_joint" type="continuous">
       <parent link="${prefix}_wheel_link" />
       <child link="${prefix}_roller_${num}" />
+      <!-- roll_sign = -1 mirrors the ring across the hub's local X axis:
+           negate y and negate the roll+yaw components accordingly. -->
       <origin xyz="${x} ${roll_sign * y} 0" rpy="${roll_sign * rr} ${rp} ${roll_sign * ry}" />
       <axis xyz="0 0 1" />
       <dynamics damping="0.001" friction="0.002"/>

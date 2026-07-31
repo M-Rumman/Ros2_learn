@@ -1,0 +1,39 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz. 1000 Hz is unnecessary for this robot and can
+                       # starve the Gazebo Classic real-time factor; 100 Hz
+                       # is plenty for velocity-controlled wheels.
+
+    mecanum_drive_controller:
+      type: mecanum_drive_controller/MecanumDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+mecanum_drive_controller:
+  ros__parameters:
+    front_left_wheel_command_joint_name: front_left_wheel_joint
+    front_right_wheel_command_joint_name: front_right_wheel_joint
+    rear_left_wheel_command_joint_name: rear_left_wheel_joint
+    rear_right_wheel_command_joint_name: rear_right_wheel_joint
+
+    kinematics:
+      wheels_radius: 0.0267          # matches the actual hub mesh radius
+      # lx + ly: lx = ly = wheel_stance (0.08 m each, see robot.xacro)
+      sum_of_robot_center_projection_on_X_Y_axis: 0.16
+      base_frame_offset:
+        x: 0.0
+        y: 0.0
+        theta: 0.0
+
+    reference_timeout: 1.0
+
+    # ROS 2 Humble teleop_twist_keyboard publishes plain (unstamped) Twist
+    # by default. use_stamped_vel: false makes the controller subscribe to
+    # <controller_name>/reference_unstamped [geometry_msgs/Twist] instead
+    # of the default <controller_name>/reference [TwistStamped].
+    use_stamped_vel: false
+
+    base_frame_id: base_link
+    odom_frame_id: odom
+    enable_odom_tf: true

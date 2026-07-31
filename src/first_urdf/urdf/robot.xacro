@@ -1,49 +1,59 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mecanum_bot">
 
-  <!-- Include your optimized wheel macro file -->
   <xacro:include filename="$(find first_urdf)/urdf/mecanum_wheel.xacro" />
 
-  <!-- Base Link Box (Adjusted for 400g scale) -->
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <!-- Scaled down from 1m to 20cm x 15cm x 8cm to reflect your 400g chassis scale -->
         <box size="0.20 0.15 0.08" />
       </geometry>
       <material name="blue">
         <color rgba="0.0 0.0 0.5 1.0"/>
       </material>
     </visual>
-
     <collision>
-      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <box size="0.20 0.15 0.08" />
       </geometry>
     </collision>
     <inertial>
-      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.4" />
       <inertia ixx="0.000963" ixy="0.0" ixz="0.0" iyy="0.001547" iyz="0.0" izz="0.002083" />
     </inertial>
   </link>
 
-  <!-- Gazebo needs its own material tag; the URDF <material><color> above is only
-       honored by RViz. Without this, Gazebo renders base_link with its default
-       gray material regardless of what color you set above. -->
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
   </gazebo>
 
-  <!-- Mounting Wheels at the corner coordinates (Adjusted offsets for smaller chassis) -->
-  <xacro:mecanum_wheel prefix="front_left"  parent="base_link" xyz="0.06 0.11 0.0"  rpy="0 0 0" roll_sign="-1" />
-  <xacro:mecanum_wheel prefix="front_right" parent="base_link" xyz="0.06 -0.06 0.0" rpy="0 0 0" roll_sign="1" />
-  <xacro:mecanum_wheel prefix="rear_left"   parent="base_link" xyz="-0.11 0.11 0.0"  rpy="0 0 0" roll_sign="1" />
-  <xacro:mecanum_wheel prefix="rear_right"  parent="base_link" xyz="-0.11 -0.06 0.0" rpy="0 0 0" roll_sign="-1" />
+  <link name="base_footprint"/>
 
-  <!-- ros2_control configuration -->
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.04" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:property name="wheel_stance" value="0.087" />
+  <xacro:property name="wheel_z" value="-0.04" />
+  
+  <xacro:mecanum_wheel prefix="front_left"  parent="base_link"
+    xyz="${wheel_stance} ${wheel_stance} ${wheel_z}"
+    roll_sign="1"   hub_sign="1"  mesh_pkg="first_urdf" />
+  <xacro:mecanum_wheel prefix="front_right" parent="base_link"
+    xyz="${wheel_stance} ${-wheel_stance} ${wheel_z}"
+    roll_sign="-1"  hub_sign="-1" mesh_pkg="first_urdf" />
+  <xacro:mecanum_wheel prefix="rear_left"   parent="base_link"
+    xyz="${-wheel_stance} ${wheel_stance} ${wheel_z}"
+    roll_sign="-1"  hub_sign="-1" mesh_pkg="first_urdf" />
+  <xacro:mecanum_wheel prefix="rear_right"  parent="base_link"
+    xyz="${-wheel_stance} ${-wheel_stance} ${wheel_z}"
+    roll_sign="1"   hub_sign="1"  mesh_pkg="first_urdf" />
+
   <ros2_control name="GazeboSystem" type="system">
     <hardware>
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
@@ -69,6 +79,9 @@
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
       <parameters>$(find first_urdf)/config/mecanum_controllers.yaml</parameters>
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+      <robot_param_type>topic</robot_param_type>
     </plugin>
   </gazebo>
 </robot>

@@ -1,4 +1,5 @@
 import os
+import re  # 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler
@@ -14,6 +15,14 @@ def generate_launch_description():
     # Convert Xacro parameters to explicit URDF structures
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
+
+    # REMOVE XML COMMENTS (Fixes gazebo_ros2_control parser error)
+    robot_description_raw = re.sub(r'<!--.*?-->', '', robot_description_raw, flags=re.DOTALL)
+
+    if robot_description_raw.startswith('<?xml'):
+        robot_description_raw = robot_description_raw[
+            robot_description_raw.index('?>') + 2:
+        ].strip()
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
@@ -33,10 +42,13 @@ def generate_launch_description():
         ]),
     )
 
+    # Spawn just above wheel-radius clearance so the robot settles onto
+    # its wheels instead of free-falling from height and bouncing/tipping
+    # (0.6 m was sized for a much larger robot).
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-topic', 'robot_description', '-entity', 'mecanum_bot', '-z', '0.6'],
+        arguments=['-topic', 'robot_description', '-entity', 'mecanum_bot', '-z', '0.06'],
         output='screen'
     )
 
@@ -46,13 +58,18 @@ def generate_launch_description():
         arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
     )
 
-    # Remaps the root topic directly to resolve parameter visibility issues
+    # The controller's own runtime topic (not the spawner CLI) is what
+    # needs remapping: with use_stamped_vel:false it listens on
+    # <ctrl_name>/reference_unstamped [geometry_msgs/Twist]. Remapping
+    # '~/reference_unstamped' on the spawner node does not reach that
+    # topic once the controller is loaded into controller_manager, so we
+    # target the fully-qualified topic name instead.
     mecanum_drive_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['mecanum_drive_controller', '--controller-manager', '/controller_manager'],
         remappings=[
-            ('~/reference_unstamped', '/cmd_vel'),
+            ('/mecanum_drive_controller/reference_unstamped', '/cmd_vel'),
         ]
     )
 
