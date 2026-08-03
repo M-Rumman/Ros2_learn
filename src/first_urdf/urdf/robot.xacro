@@ -21,13 +21,16 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="4.0" />
+      <mass value="18.0" />
       <inertia ixx="0.00963" ixy="0.0" ixz="0.0" iyy="0.01547" iyz="0.0" izz="0.02083" />
     </inertial>
   </link>
 
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <gravity>true</gravity>
   </gazebo>
 
   <link name="base_footprint"/>
@@ -38,7 +41,7 @@
     <origin xyz="0 0 0.04" rpy="0 0 0"/>
   </joint>
 
-  <xacro:property name="wheel_stance" value="0.087" />
+  <xacro:property name="wheel_stance" value="0.09" />
   <xacro:property name="wheel_z" value="-0.04" />
   
   <xacro:mecanum_wheel prefix="front_left"  parent="base_link"

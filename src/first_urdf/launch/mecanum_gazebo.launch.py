@@ -25,6 +25,12 @@ def generate_launch_description():
         ].strip()
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    
+    world_path = os.path.join(
+        get_package_share_directory('first_urdf'),
+        'worlds',
+        'mecanum_world.world'
+    )
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -40,6 +46,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
         ]),
+        launch_arguments={'world': world_path}.items()
     )
 
     # Spawn just above wheel-radius clearance so the robot settles onto
