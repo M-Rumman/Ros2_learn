@@ -65,19 +65,24 @@ def generate_launch_description():
         arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
     )
 
-    # The controller's own runtime topic (not the spawner CLI) is what
-    # needs remapping: with use_stamped_vel:false it listens on
-    # <ctrl_name>/reference_unstamped [geometry_msgs/Twist]. Remapping
-    # '~/reference_unstamped' on the spawner node does not reach that
-    # topic once the controller is loaded into controller_manager, so we
-    # target the fully-qualified topic name instead.
     mecanum_drive_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['mecanum_drive_controller', '--controller-manager', '/controller_manager'],
-        remappings=[
-            ('/mecanum_drive_controller/reference_unstamped', '/cmd_vel'),
-        ]
+    )
+
+    # The controller listens on <ctrl_name>/reference_unstamped, not /cmd_vel.
+    # A `remappings=` on the spawner cannot fix that: the spawner is a
+    # short-lived CLI process, while the controller runs inside gzserver.
+    # So bridge the two topics with a relay node instead, letting
+    # teleop_twist_keyboard (and later Nav2) publish plain /cmd_vel.
+    cmd_vel_relay = Node(
+        package='topic_tools',
+        executable='relay',
+        name='cmd_vel_relay',
+        arguments=['/cmd_vel', '/mecanum_drive_controller/reference_unstamped'],
+        parameters=[{'use_sim_time': use_sim_time}],
+        output='screen',
     )
 
     return LaunchDescription([
@@ -100,5 +105,6 @@ def generate_launch_description():
                 target_action=joint_state_broadcaster_spawner,
                 on_exit=[mecanum_drive_controller_spawner],
             )
-        )
+        ),
+        cmd_vel_relay,
     ])
