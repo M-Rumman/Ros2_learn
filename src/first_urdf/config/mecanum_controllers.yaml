@@ -26,6 +26,13 @@ mecanum_drive_controller:
 
     reference_timeout: 1.0
 
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 2.5       # Increase this value (e.g., from 0.5/1.0 to 2.5 or 3.0 rad/s)
+        has_acceleration_limits: true
+        max_acceleration: 5.0
+
     use_stamped_vel: false
 
     base_frame_id: base_link

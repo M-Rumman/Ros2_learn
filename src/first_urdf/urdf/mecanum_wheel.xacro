@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="mecanum_wheel" params="prefix parent xyz roll_sign mesh_pkg hub_sign:=1">
+  <xacro:macro name="mecanum_wheel" params="prefix parent xyz roll_sign mesh_pkg hub_sign">
 
     <link name="${prefix}_wheel_link">
       <visual>
@@ -21,7 +21,7 @@
       </collision>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0" />
-        <mass value="0.8" />
+        <mass value="0.6" />
         <inertia ixx="1.5E-03" ixy="0.0" ixz="0.0"
                  iyy="2.5E-03" iyz="0.0" izz="1.5E-03" />
       </inertial>
@@ -32,19 +32,19 @@
       <child link="${prefix}_wheel_link" />
       <origin xyz="${xyz}" rpy="1.5708 0 0" />
       <axis xyz="0 0 -1" />
-      <dynamics damping="0.001" friction="1.0"/>
+      <dynamics damping="0.0005" friction="0.5"/>
     </joint>
 
 
     <gazebo reference="${prefix}_wheel_link">
       <material>Gazebo/Yellow</material>
-      <mu1>0.2</mu1>
-      <mu2>0.02</mu2>
-      <fdir1>1 0 0</fdir1>
-      <kp>1000000.0</kp>
-      <kd>10.0</kd>
-      <minDepth>0.0005</minDepth>
-      <maxVel>0.5</maxVel>
+      <mu1>0.3</mu1>
+      <mu2>0.3</mu2>
+      <fdir1>${hub_sign} 0 0</fdir1>
+      <kp>100000.0</kp>
+      <kd>100.0</kd>
+      <minDepth>0.000</minDepth>
+      <maxVel>0.000</maxVel>
     </gazebo>
 
     <xacro:roller prefix="${prefix}" num="1" mesh_pkg="${mesh_pkg}"
@@ -80,11 +80,11 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <cylinder radius="0.0065" length="0.02" />
+          <cylinder radius="0.0055" length="0.02" />
         </geometry>
-      </collision>          
+      </collision>               
       <inertial>
-        <mass value="0.05" />
+        <mass value="0.02" />
         <inertia ixx="1.2617E-07" ixy="0.0" ixz="0.0"
                  iyy="1.2617E-07" iyz="0.0" izz="5.1291E-08" />
       </inertial>
@@ -95,18 +95,18 @@
       <child link="${prefix}_roller_${num}" />
       <origin xyz="${x} ${roll_sign * y} 0" rpy="${roll_sign * rr} ${rp} ${roll_sign * ry}" />
       <axis xyz="0 0 1" />
-      <dynamics damping="0.002" friction="2.0"/>
+      <dynamics damping="0.002" friction="0.2"/>
     </joint>
 
     <gazebo reference="${prefix}_roller_${num}">
       <material>Gazebo/Red</material>
-      <mu1>0.7</mu1>
-      <mu2>0.09</mu2>
-      <fdir1>0 0 1</fdir1>
-      <kp>1000000.0</kp>
-      <kd>10.0</kd>
+      <mu1>0.70</mu1>
+      <mu2>0.075</mu2>
+      <fdir1>0 0 ${roll_sign}</fdir1>
+      <kp>100000.0</kp>
+      <kd>100.0</kd>
       <minDepth>0.0005</minDepth>
-      <maxVel>0.01</maxVel>
+      <maxVel>0.000</maxVel>
     </gazebo>
   </xacro:macro>
 

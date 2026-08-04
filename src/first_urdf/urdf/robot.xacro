@@ -21,7 +21,7 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="4" />
+      <mass value="8" />
       <inertia ixx="0.00963" ixy="0.0" ixz="0.0" iyy="0.01547" iyz="0.0" izz="0.02083" />
     </inertial>
   </link>
@@ -41,8 +41,8 @@
     <origin xyz="0 0 0.04" rpy="0 0 0"/>
   </joint>
 
-  <xacro:property name="wheel_stance" value="0.09" />
-  <xacro:property name="wheel_z" value="-0.04" />
+  <xacro:property name="wheel_stance" value="0.095" />
+  <xacro:property name="wheel_z" value="-0.037" />
   
   <xacro:mecanum_wheel prefix="front_left"  parent="base_link"
     xyz="${wheel_stance} ${wheel_stance} ${wheel_z}"
