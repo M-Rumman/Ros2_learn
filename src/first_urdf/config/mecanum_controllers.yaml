@@ -17,26 +17,27 @@ mecanum_drive_controller:
     rear_right_wheel_command_joint_name: rear_right_wheel_joint
 
     kinematics:
-      wheels_radius: 0.025
-      sum_of_robot_center_projection_on_X_Y_axis: 0.19
+      wheels_radius: 0.0284
+      sum_of_robot_center_projection_on_X_Y_axis: 0.190
       base_frame_offset:
         x: 0.0
         y: 0.0
         theta: 0.0
-    
-    linear:
-      x:
-        has_acceleration_limits: true
-        max_acceleration: 0.2 # m/s^2 (adjust for ramping speed)
-      y:
-        has_acceleration_limits: true
-        max_acceleration: 0.2
-    angular:
-      z:
-        has_acceleration_limits: true
-        max_angular_acceleration: 0.1 # rad/s^2
 
     reference_timeout: 1.0
+
+    # NOTE: no linear/angular limit blocks here on purpose.
+    # Humble's mecanum_drive_controller DECLARES has_velocity_limits /
+    # max_velocity / max_acceleration but contains no code that applies them
+    # (verified against the Humble source, and by measurement: with
+    # max_velocity 0.6 a command of 1.5 m/s still produced 1.54 m/s).
+    # They read back correctly via `ros2 param get`, which makes them a trap.
+    #
+    # To actually limit speed/acceleration, do it upstream of the controller:
+    #   - nav2_velocity_smoother (the standard choice, and Nav2 needs it anyway)
+    #   - or teleop_twist_keyboard's own speed settings for manual driving
+    # Physical ceiling if you set one: a_max <= mu * g. Roller mu1 = 0.7 gives
+    # ~6.9 m/s^2 before slip; ~2.0 m/s^2 is a sane working value.
 
     use_stamped_vel: false
 
