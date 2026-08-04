@@ -16,3 +16,6 @@ __pycache__/
 
 core.*
 /test.urdf
+
+# Personal working notes, not shared with the team
+README.md
