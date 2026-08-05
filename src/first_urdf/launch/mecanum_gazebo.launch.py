@@ -1,5 +1,5 @@
 import os
-import re  # 
+import re
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler
@@ -12,11 +12,9 @@ import xacro
 def generate_launch_description():
     pkg_share = get_package_share_directory('first_urdf')
 
-    # Convert Xacro parameters to explicit URDF structures
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
 
-    # REMOVE XML COMMENTS (Fixes gazebo_ros2_control parser error)
     robot_description_raw = re.sub(r'<!--.*?-->', '', robot_description_raw, flags=re.DOTALL)
 
     if robot_description_raw.startswith('<?xml'):
@@ -24,13 +22,11 @@ def generate_launch_description():
             robot_description_raw.index('?>') + 2:
         ].strip()
 
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     
-    world_path = os.path.join(
-        get_package_share_directory('first_urdf'),
-        'worlds',
-        'mecanum_world.world'
-    )
+    mecanum_controllers_yaml = os.path.join(pkg_share, 'config', 'mecanum_controllers.yaml')
+    
+    world_path = os.path.join(pkg_share, 'worlds', 'mecanum_world.world')
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -41,41 +37,59 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }]
     )
+    
+    node_joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time,
+            'publish_default_positions': True,
+            'ignore_timestamp': False,
+        }]
+    )
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
         ]),
-        launch_arguments={'world': world_path}.items()
+        launch_arguments={
+            'world': world_path,
+        }.items()
     )
 
-    # Spawn just above wheel-radius clearance so the robot settles onto
-    # its wheels instead of free-falling from height and bouncing/tipping
-    # (0.6 m was sized for a much larger robot).
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=['-topic', 'robot_description', '-entity', 'mecanum_bot', '-z', '0.06'],
         output='screen'
     )
+    
+    node_rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}],
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'mecanum_view.rviz')] if os.path.exists(os.path.join(pkg_share, 'rviz', 'mecanum_view.rviz')) else [],
+    )
 
     joint_state_broadcaster_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+        parameters=[{'use_sim_time': use_sim_time}],
     )
 
     mecanum_drive_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['mecanum_drive_controller', '--controller-manager', '/controller_manager'],
-    )
+        arguments=["mecanum_drive_controller"],
+        parameters=[{'use_sim_time': use_sim_time}],
+        output='screen'
+    )    
 
-    # The controller listens on <ctrl_name>/reference_unstamped, not /cmd_vel.
-    # A `remappings=` on the spawner cannot fix that: the spawner is a
-    # short-lived CLI process, while the controller runs inside gzserver.
-    # So bridge the two topics with a relay node instead, letting
-    # teleop_twist_keyboard (and later Nav2) publish plain /cmd_vel.
     cmd_vel_relay = Node(
         package='topic_tools',
         executable='relay',
@@ -103,7 +117,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
-                on_exit=[mecanum_drive_controller_spawner],
+                on_exit=[mecanum_drive_controller_spawner, node_rviz, node_joint_state_publisher],
             )
         ),
         cmd_vel_relay,

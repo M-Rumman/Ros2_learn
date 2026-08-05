@@ -1,13 +1,13 @@
 controller_manager:
   ros__parameters:
-    update_rate: 1000
+    use_sim_time: true
+    update_rate: 100
 
     mecanum_drive_controller:
       type: mecanum_drive_controller/MecanumDriveController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
-    
 
 mecanum_drive_controller:
   ros__parameters:
@@ -25,29 +25,17 @@ mecanum_drive_controller:
         theta: 0.0
 
     tf_frame_prefix_direction: ""
-    pose_covariance_diagonal: [0.001, 0.001, 1.0e-3, 1.0e-3, 1.0e-3, 0.01]
-    twist_covariance_diagonal: [0.001, 0.001, 1.0e-3, 1.0e-3, 1.0e-3, 0.01]
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
     reference_timeout: 1.0
     cmd_vel_timeout: 0.5
-
+    use_sim_time: true
     open_loop: false
-
-    # NOTE: no linear/angular limit blocks here on purpose.
-    # Humble's mecanum_drive_controller DECLARES has_velocity_limits /
-    # max_velocity / max_acceleration but contains no code that applies them
-    # (verified against the Humble source, and by measurement: with
-    # max_velocity 0.6 a command of 1.5 m/s still produced 1.54 m/s).
-    # They read back correctly via `ros2 param get`, which makes them a trap.
-    #
-    # To actually limit speed/acceleration, do it upstream of the controller:
-    #   - nav2_velocity_smoother (the standard choice, and Nav2 needs it anyway)
-    #   - or teleop_twist_keyboard's own speed settings for manual driving
-    # Physical ceiling if you set one: a_max <= mu * g. Roller mu1 = 0.7 gives
-    # ~6.9 m/s^2 before slip; ~2.0 m/s^2 is a sane working value.
-
     use_stamped_vel: false
 
+    # Standard ROS 2 parameters
     base_frame_id: base_footprint
     odom_frame_id: odom
     enable_odom_tf: true
+    publish_rate: 50.0

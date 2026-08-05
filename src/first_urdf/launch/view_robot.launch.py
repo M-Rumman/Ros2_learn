@@ -14,7 +14,7 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
 
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
     rviz_config_file = os.path.join(pkg_share, 'rviz', 'mecanum_view.rviz')
 
@@ -30,11 +30,17 @@ def generate_launch_description():
 
     # GUI sliders to manually move each continuous joint (wheels + rollers)
     # so you can visually confirm joints and meshes are correctly wired up.
-    node_joint_state_publisher_gui = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui',
-        output='screen'
+    node_joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time,
+            'source_list': ['joint_states'],
+            'publish_default_positions': True,
+            'ignore_timestamp': False,
+        }]
     )
 
     node_rviz = Node(
@@ -42,16 +48,17 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
+        parameters=[{'use_sim_time': use_sim_time}],
         arguments=['-d', rviz_config_file] if os.path.exists(rviz_config_file) else [],
     )
 
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
-            default_value='false',
+            default_value='true',
             description='Use simulation (Gazebo) clock if true'
         ),
         node_robot_state_publisher,
-        node_joint_state_publisher_gui,
+        node_joint_state_publisher,
         node_rviz,
     ])

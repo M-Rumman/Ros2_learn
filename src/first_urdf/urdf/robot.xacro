@@ -84,9 +84,16 @@
     </joint>
   </ros2_control>
 
+
+  <!--mecanum_drive_controller was publishing to its own private topic called odometry with its own prefix. While Rviz listens to only global topics, so had to remap to odom for frame and tf for transform.-->
+  <!--Earlier I remapped to mecanum_controller_spawner_node which didn't work because it is a shortlived node. Moral of the story, never remap in spawner, the same was for reference_unstamped remapping.-->
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
       <parameters>$(find first_urdf)/config/mecanum_controllers.yaml</parameters>
+      <ros>
+        <remapping>/mecanum_drive_controller/tf_odometry:=/tf</remapping>
+        <remapping>/mecanum_drive_controller/odometry:=/odom</remapping>
+      </ros>
       <robot_param>robot_description</robot_param>
       <robot_param_node>robot_state_publisher</robot_param_node>
       <robot_param_type>topic</robot_param_type>
