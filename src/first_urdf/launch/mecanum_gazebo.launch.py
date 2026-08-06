@@ -22,11 +22,11 @@ def generate_launch_description():
             robot_description_raw.index('?>') + 2:
         ].strip()
 
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     
     mecanum_controllers_yaml = os.path.join(pkg_share, 'config', 'mecanum_controllers.yaml')
     
-    world_path = os.path.join(pkg_share, 'worlds', 'mecanum_world.world')
+    world_path = os.path.join(pkg_share, 'worlds', 'mecanumWorld.world')
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
