@@ -84,6 +84,7 @@
       </ray>
       <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
         <ros>
+          <use_sim_time>true</use_sim_time>
           <argument>~/out:=scan</argument> <!--This is remapping from the out topic of the controller to scan topic-->
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>

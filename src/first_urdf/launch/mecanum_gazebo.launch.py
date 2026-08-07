@@ -11,9 +11,25 @@ import xacro
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('first_urdf')
+    nav2_bringup_dir = get_package_share_directory('nav2_bringup')
 
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
+    
+    map_file = os.path.join(pkg_share, 'maps', 'mecanum_world_map.yaml')
+    params_file = os.path.join(pkg_share, 'config', 'nav2_params.yaml')
+    
+    nav2_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(nav2_bringup_dir, 'launch', 'bringup_launch.py')
+        ),
+        launch_arguments={
+            'map': map_file,
+            'use_sim_time': 'true',
+            'params_file': params_file,
+            'autostart': 'true'
+        }.items()
+    )                              
 
     robot_description_raw = re.sub(r'<!--.*?-->', '', robot_description_raw, flags=re.DOTALL)
 
@@ -117,7 +133,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
-                on_exit=[mecanum_drive_controller_spawner, node_rviz, node_joint_state_publisher],
+                on_exit=[mecanum_drive_controller_spawner, node_rviz, node_joint_state_publisher, nav2_launch],
             )
         ),
         cmd_vel_relay,
