@@ -4,9 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Odometry1/Shape1
+        - /Odometry2/Shape1
       Splitter Ratio: 0.5
-    Tree Height: 70
+    Tree Height: 159
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -163,6 +163,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         laser_frame:
           Alpha: 1
           Show Axes: false
@@ -311,6 +316,8 @@ Visualization Manager:
           Value: true
         front_right_wheel_link:
           Value: true
+        imu_link:
+          Value: true
         laser_frame:
           Value: true
         map:
@@ -397,6 +404,8 @@ Visualization Manager:
                     {}
                   front_right_roller_8:
                     {}
+                imu_link:
+                  {}
                 laser_frame:
                   {}
                 rear_left_wheel_link:
@@ -461,10 +470,10 @@ Visualization Manager:
         Axes Length: 1
         Axes Radius: 0.10000000149011612
         Color: 255; 25; 0
-        Head Length: 0.019999999552965164
-        Head Radius: 0.019999999552965164
-        Shaft Length: 0.20000000298023224
-        Shaft Radius: 0.009999999776482582
+        Head Length: 0.0020000000949949026
+        Head Radius: 0.0020000000949949026
+        Shaft Length: 0.009999999776482582
+        Shaft Radius: 0.0010000000474974513
         Value: Arrow
       Topic:
         Depth: 5
@@ -521,10 +530,10 @@ Visualization Manager:
         Axes Length: 1
         Axes Radius: 0.10000000149011612
         Color: 255; 25; 0
-        Head Length: 0.30000001192092896
-        Head Radius: 0.10000000149011612
-        Shaft Length: 1
-        Shaft Radius: 0.05000000074505806
+        Head Length: 0.029999999329447746
+        Head Radius: 0.009999999776482582
+        Shaft Length: 0.20000000298023224
+        Shaft Radius: 0.00800000037997961
         Value: Arrow
       Topic:
         Depth: 5
@@ -611,6 +620,62 @@ Visualization Manager:
         Value: /local_costmap/costmap_updates
       Use Timestamp: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_plan
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /received_global_plan
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -657,16 +722,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 5.285947322845459
+      Distance: 2.5455894470214844
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.8398122787475586
-        Y: -0.19767005741596222
-        Z: 0.015858780592679977
+        X: -0.034902557730674744
+        Y: -0.1951407939195633
+        Z: 0.021076451987028122
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -680,10 +745,10 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 708
+  Height: 975
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000003d70000026efc0200000005fb000000100044006900730070006c006100790073010000003b000000c7000000c700fffffffb0000001200530065006c0065006300740069006f006e01000001080000005c0000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000016a0000005c0000005c00fffffffb0000000a0056006900650077007301000001cc000000a0000000a000fffffffb0000000800540069006d00650100000272000000370000003700ffffff000000f90000026e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000003d700000379fc0200000005fb000000100044006900730070006c006100790073010000003b00000120000000c700fffffffb0000001200530065006c0065006300740069006f006e0100000161000000850000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000001ec000000850000005c00fffffffb0000000a005600690065007700730100000277000000e7000000a000fffffffb0000000800540069006d00650100000364000000500000003700ffffff000003970000037900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -692,6 +757,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1238
-  X: 97
-  Y: -16
+  Width: 1908
+  X: 0
+  Y: 0

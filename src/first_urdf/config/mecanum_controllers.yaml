@@ -37,5 +37,5 @@ mecanum_drive_controller:
     # Standard ROS 2 parameters
     base_frame_id: base_footprint
     odom_frame_id: odom
-    enable_odom_tf: true
+    enable_odom_tf: false
     publish_rate: 50.0

@@ -90,6 +90,14 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}],
         arguments=['-d', os.path.join(pkg_share, 'rviz', 'mecanum_view.rviz')] if os.path.exists(os.path.join(pkg_share, 'rviz', 'mecanum_view.rviz')) else [],
     )
+    
+    robot_localization_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[os.path.join(pkg_share, 'config', 'ekf.yaml')]
+    )
 
     joint_state_broadcaster_spawner = Node(
         package='controller_manager',
@@ -133,7 +141,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
-                on_exit=[mecanum_drive_controller_spawner, node_rviz, node_joint_state_publisher, nav2_launch],
+                on_exit=[mecanum_drive_controller_spawner, node_rviz, node_joint_state_publisher, robot_localization_node, nav2_launch],
             )
         ),
         cmd_vel_relay,
