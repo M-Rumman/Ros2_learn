@@ -16,7 +16,7 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
     
-    map_file = os.path.join(pkg_share, 'maps', 'mecanum_world_map.yaml')
+    map_file = os.path.join(pkg_share, 'maps', 'my_room_map.yaml')
     params_file = os.path.join(pkg_share, 'config', 'nav2_params.yaml')
     
     nav2_launch = IncludeLaunchDescription(
@@ -40,9 +40,14 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     
+    x_pose = LaunchConfiguration('x_pose', default='-5.5')
+    y_pose = LaunchConfiguration('y_pose', default='4.4')
+    z_pose = LaunchConfiguration('z_pose', default='0.06')
+    yaw_pose = LaunchConfiguration('yaw', default='0.0')
+    
     mecanum_controllers_yaml = os.path.join(pkg_share, 'config', 'mecanum_controllers.yaml')
     
-    world_path = os.path.join(pkg_share, 'worlds', 'mecanumWorld.world')
+    world_path = os.path.join(pkg_share, 'worlds', 'hospital.world')
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -78,7 +83,14 @@ def generate_launch_description():
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-topic', 'robot_description', '-entity', 'mecanum_bot', '-z', '0.06'],
+        arguments=[
+            '-topic', 'robot_description',
+            '-entity', 'mecanum_bot',
+            '-x', x_pose,
+            '-y', y_pose,
+            '-z', z_pose,
+            '-Y', yaw_pose
+        ],
         output='screen'
     )
     

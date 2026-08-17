@@ -54,10 +54,6 @@ bt_navigator:
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
-    # 'default_nav_through_poses_bt_xml' and 'default_nav_to_pose_bt_xml' are use defaults:
-    # nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml
-    # nav2_bt_navigator/navigate_through_poses_w_replanning_and_recovery.xml
-    # They can be set here or via a RewrittenYaml remap from a parent launch file to Nav2.
     plugin_lib_names:
       - nav2_compute_path_to_pose_action_bt_node
       - nav2_compute_path_through_poses_action_bt_node
@@ -127,29 +123,26 @@ controller_server:
     goal_checker_plugins: ["general_goal_checker"]
     controller_plugins: ["FollowPath"]
 
-    # Progress checker parameters
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
       required_movement_radius: 0.5
       movement_time_allowance: 10.0
 
-    # Goal checker parameters
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.15
       yaw_goal_tolerance: 0.15
 
-    # MPPI Parameters
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
       time_steps: 56
       model_dt: 0.05
-      batch_size: 500              # Trajectories evaluated per iteration (lower to 500 if CPU lags)
+      batch_size: 1000
       iteration_count: 1
       temperature: 0.3
       gamma: 0.015
-      motion_model: "Omni"           # CRITICAL: Enables native Mecanum/Omnidirectional movement
+      motion_model: "Omni"
 
       vx_max: 0.26
       vx_min: -0.26
@@ -164,12 +157,12 @@ controller_server:
       ay_min: -2.5
       az_max: 3.2
       az_min: -3.2
-      # Sampling standard deviations
+
       vx_std: 0.2
       vy_std: 0.2
       wz_std: 0.4
-      # MPPI Critics Configuration
-      critics: ["ConstraintCritic", "CostCritic", "GoalCritic", "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic", "PathAngleCritic"]
+
+      critics: ["ConstraintCritic", "CostCritic", "GoalCritic", "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic"]
       ConstraintCritic:
         enabled: true
         cost_power: 1
@@ -177,7 +170,7 @@ controller_server:
       CostCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 3.8
+        cost_weight: 1.5
         critical_cost: 300.0
         consider_footprint: true
       GoalCritic:
@@ -199,13 +192,8 @@ controller_server:
       PathFollowCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 5.0
+        cost_weight: 12.0
         offset_from_furthest: 5
-      PathAngleCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 2.0
-        offset_from_furthest: 4
 
 local_costmap:
   local_costmap:
@@ -245,9 +233,6 @@ local_costmap:
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
           obstacle_min_range: 0.0
-      static_layer:
-        plugin: "nav2_costmap_2d::StaticLayer"
-        map_subscribe_transient_local: True
       always_send_full_costmap: True
 
 global_costmap:
@@ -288,8 +273,6 @@ global_costmap:
 map_server:
   ros__parameters:
     use_sim_time: True
-    # Overridden in launch by the "map" launch configuration or provided default value.
-    # To use in yaml, remove the default "map" value in the tb3_simulation_launch.py file & provide full path to map below.
     yaml_filename: ""
 
 map_saver:
@@ -307,7 +290,7 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
-      tolerance: 0.05
+      tolerance: 0.5
       use_astar: false
       allow_unknown: true
 
