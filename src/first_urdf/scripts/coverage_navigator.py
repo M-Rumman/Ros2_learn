@@ -5,7 +5,7 @@ from geometry_msgs.msg import PoseStamped
 import numpy as np
 from shapely.geometry import Polygon, LineString, Point
 
-def generate_boustrophedon_path(polygon_pts, stripe_spacing=0.20, frame_id='map'):
+def generate_boustrophedon_path(polygon_pts, stripe_spacing=0.20, point_step=None, frame_id='map'):
     """
     Generates back-and-forth boustrophedon waypoints inside a polygon area.
     """
@@ -34,7 +34,16 @@ def generate_boustrophedon_path(polygon_pts, stripe_spacing=0.20, frame_id='map'
                 segments.append(list(line.coords))
 
         for seg in segments:
-            pts = list(seg)
+            # Interpolate waypoints along the lane based on point_step
+            p1, p2 = np.array(seg[0]), np.array(seg[1])
+            dist = np.linalg.norm(p2 - p1)
+
+            if point_step is not None and point_step > 0.0:
+                num_points = max(2, int(np.ceil(dist / point_step)) + 1)
+                pts = [p1 + (p2 - p1) * (i / (num_points - 1)) for i in range(num_points)]
+            else:
+                pts = [p1, p2]
+
             if reverse_direction:
                 pts = pts[::-1]
 
@@ -61,15 +70,16 @@ def main():
     # Define the room boundary coordinates (X, Y) on your map
     # Update these 4 corners to fit your room's inner floor space:
     room_polygon = [
-        (-4.3, -0.16),
-        (0.1, -0.16),
-        (0.1, 2.3),
-        (-4.3, 2.3)
+        (-4.2, -0.16),
+        (0.22, -0.16),
+        (0.22, 2.3),
+        (-4.2, 2.3)
     ]
 
     # Generate coverage path with a 20 cm lane width
     stripe_width = 0.25
-    path_poses = generate_boustrophedon_path(room_polygon, stripe_spacing=stripe_width)
+    point_density = 0.20  # Distance (in meters) between waypoints along the same lane (set to None for lane endpoints only)
+    path_poses = generate_boustrophedon_path(room_polygon, stripe_spacing=stripe_width, point_step=point_density)
 
     print(f"Generated {len(path_poses)} coverage waypoints. Executing coverage path...")
 

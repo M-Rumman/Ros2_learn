@@ -40,7 +40,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     
-    x_pose = LaunchConfiguration('x_pose', default='-5.5')
+    x_pose = LaunchConfiguration('x_pose', default='-5.3')
     y_pose = LaunchConfiguration('y_pose', default='4.4')
     z_pose = LaunchConfiguration('z_pose', default='0.06')
     yaw_pose = LaunchConfiguration('yaw', default='0.0')
